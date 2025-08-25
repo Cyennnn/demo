@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>簡單自動回覆機器人</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #chat { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
+    .msg { margin: 5px 0; }
+    .user { color: blue; }
+    .bot { color: green; }
+  </style>
+</head>
+<body>
+  <h2>自動回覆聊天室</h2>
+  <div id="chat"></div>
+  <input type="text" id="input" placeholder="輸入訊息..." />
+  <button onclick="send()">送出</button>
+
+  <script>
+    function send() {
+      const chat = document.getElementById("chat");
+      const input = document.getElementById("input");
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      // 顯示使用者訊息
+      chat.innerHTML += `<div class="msg user">你: ${msg}</div>`;
+      
+      // 自動回覆邏輯 (你可以自己加規則)
+      let reply = "我不太懂你的意思 😅";
+      if (msg.includes("你好")) reply = "你好，很高興認識你！";
+      if (msg.includes("時間")) reply = "現在時間是 " + new Date().toLocaleTimeString();
+      if (msg.includes("再見")) reply = "再見，希望很快再聊！";
+
+      // 顯示機器人回覆
+      chat.innerHTML += `<div class="msg bot">機器人: ${reply}</div>`;
+
+      // 清空輸入框
+      input.value = "";
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // 按 Enter 也能送出
+    document.getElementById("input").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") send();
+    });
+  </script>
+</body>
+</html>
